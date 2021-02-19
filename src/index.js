@@ -47,15 +47,5 @@ const run = async (postNumber) => {
   }
 };
 
-// try {
-//   let CronJob = require("cron").CronJob;
-//   let job = new CronJob("0 0 */1 * * *", function () {
-//     let postNumber = new Date(Date.now()).getHours();
-//     let result = run(postNumber);
-//   });
-//   job.start();
-// } catch (error) {
-//   console.log("🚀 ~ file: index.js ~ line 57 ~ error", error);
-//   job.start();
-// }
-run(0)
+let postNumber = new Date(Date.now()).getHours();
+run(postNumber);

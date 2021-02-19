@@ -137,7 +137,7 @@ const doStuffWithDownloadedImage = async (sharp, ig, content) => {
     caption: `${content.title} - Posted on r/oddlySatisfying by ${content.author}
                 ${imageTags}`,
   });
-  let files = ["../../output.jpg", "../../downloaded.jpg"];
+  let files = ["../../output.jpg", "../../downloaded.jpeg"];
   for (const file of files) {
     fs.unlink(path.resolve(__dirname, file), (err) => {
       if (err) throw err;
