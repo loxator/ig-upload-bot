@@ -58,4 +58,4 @@ const run = async (postNumber) => {
 //   console.log("🚀 ~ file: index.js ~ line 57 ~ error", error);
 //   job.start();
 // }
-run()
+run(0)
