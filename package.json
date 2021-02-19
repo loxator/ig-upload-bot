@@ -1,0 +1,22 @@
+{
+  "name": "igbot",
+  "version": "1.0.0",
+  "description": "Bot to download the post of the hour filtered by a hashtag",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js"
+  },
+  "author": "Amin Limbada",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "cron": "^1.8.2",
+    "dotenv": "^8.2.0",
+    "ffmpeg": "^0.0.4",
+    "fluent-ffmpeg": "^2.1.2",
+    "instagram-private-api": "^1.43.3",
+    "sharp": "^0.27.1",
+    "snoowrap": "^1.22.0"
+  }
+}
