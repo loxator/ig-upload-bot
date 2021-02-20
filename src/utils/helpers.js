@@ -7,12 +7,16 @@ const readFileAsync = promisify(readFile);
 const snoowrap = require("snoowrap");
 const { imageTags, videoTags } = require("./captions");
 const path = require("path");
-const downloadFile = async (url, fileName, callback) => {
+const downloadFile = async (url, fileName) => {
   try {
     let file = fs.createWriteStream(`./${fileName}`);
-    https.get(url, (response) => {
-      response.pipe(file);
-      response.on("end", callback);
+    return new Promise((resolve, reject) => {
+      https.get(url, (response) => {
+        response.pipe(file);
+        response.on("end", () => {
+          resolve();
+        });
+      });
     });
   } catch (error) {
     console.log(
@@ -37,6 +41,7 @@ const getTopPostOfOddlySatisfying = async (r, postNumber, limit) => {
         title: topPost.title,
         author: topPost.author.name,
         imageLink: topPost.url_overridden_by_dest,
+        postID: topPost.id,
       };
     } else if (
       topPost.is_video &&
@@ -47,6 +52,7 @@ const getTopPostOfOddlySatisfying = async (r, postNumber, limit) => {
         type: "video",
         title: topPost.title,
         author: topPost.author.name,
+        postID: topPost.id,
         videoLink: topPost.media.reddit_video.fallback_url,
         thumbnail: topPost.thumbnail,
         audioLink: topPost.media.reddit_video.fallback_url.replace(
@@ -111,19 +117,6 @@ const doStuffWithDownloadedVideo = async (ig, content) => {
       message: "Error occured",
     };
   }
-
-  let files = [
-    "../../thumbnail.jpg",
-    "../../final.mp4",
-    "../../videoToBeUploaded.mp4",
-    "../../soundToBeUploaded.mp3",
-  ];
-  for (const file of files) {
-    fs.unlink(path.resolve(__dirname, file), (err) => {
-      if (err) throw err;
-      console.log("successfully deleted", file);
-    });
-  }
 };
 
 const doStuffWithDownloadedImage = async (sharp, ig, content) => {
@@ -137,13 +130,6 @@ const doStuffWithDownloadedImage = async (sharp, ig, content) => {
     caption: `${content.title} - Posted on r/oddlySatisfying by ${content.author}
                 ${imageTags}`,
   });
-  let files = ["../../output.jpg", "../../downloaded.jpeg"];
-  for (const file of files) {
-    fs.unlink(path.resolve(__dirname, file), (err) => {
-      if (err) throw err;
-      console.log("successfully deleted", file);
-    });
-  }
 };
 const initiateSnoo = (process) => {
   try {

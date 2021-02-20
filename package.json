@@ -16,6 +16,8 @@
     "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "instagram-private-api": "^1.43.3",
+    "mongodb": "^3.6.4",
+    "mongoose": "^5.11.17",
     "sharp": "^0.27.1",
     "snoowrap": "^1.22.0"
   }
