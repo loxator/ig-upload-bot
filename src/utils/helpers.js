@@ -102,8 +102,10 @@ const doStuffWithDownloadedVideo = async (ig, content) => {
       ),
       video: await readFileAsync(path.resolve(__dirname, "../../final.mp4")),
 
-      caption: `${content.title} - Posted on r/oddlySatisfying by ${content.author}
-                ${videoTags}`,
+      caption: `${content.title} - Posted on r/oddlySatisfying by ${
+        content.author
+      }
+                ${videoTags} ${convertTileToHashTag(content.title)}`,
     });
 
     console.log("Done ig.publish.video ");
