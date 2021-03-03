@@ -127,8 +127,10 @@ const doStuffWithDownloadedImage = async (sharp, ig, content) => {
   await ig.publish.photo({
     // read the file into a Buffer
     file: await readFileAsync("output.jpg"),
-    caption: `${content.title} - Posted on r/oddlySatisfying by ${content.author}
-                ${imageTags}`,
+    caption: `${content.title} - Posted on r/oddlySatisfying by ${
+      content.author
+    }
+                ${imageTags} ${convertTileToHashTag(content.title)}`,
   });
 };
 const initiateSnoo = (process) => {
@@ -146,6 +148,15 @@ const initiateSnoo = (process) => {
       error
     );
   }
+};
+
+const convertTileToHashTag = (words) => {
+  let result = "";
+  words.split(" ").map((word) => {
+    result += `#${word} `;
+  });
+
+  return result;
 };
 
 module.exports = {
