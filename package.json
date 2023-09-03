@@ -10,15 +10,15 @@
   "author": "Amin Limbada",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.20.0",
-    "cron": "^1.8.2",
-    "dotenv": "^8.2.0",
+    "axios": "1.5.0",
+    "cron": "2.4.3",
+    "dotenv": "16.3.1",
     "ffmpeg": "^0.0.4",
     "fluent-ffmpeg": "^2.1.2",
     "instagram-private-api": "^1.43.3",
-    "mongodb": "^3.6.4",
-    "mongoose": "^5.11.17",
-    "sharp": "^0.27.1",
-    "snoowrap": "^1.22.0"
+    "mongodb": "6.0.0",
+    "mongoose": "7.5.0",
+    "sharp": "0.32.5",
+    "snoowrap": "1.23.0"
   }
 }

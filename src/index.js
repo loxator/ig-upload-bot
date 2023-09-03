@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 const {
   downloadFile,
-  getTopPostOfOddlySatisfying,
+  getTopPostOfSubreddit,
   doStuffWithDownloadedImage,
   initiateSnoo,
   doStuffWithDownloadedVideo,
@@ -26,11 +26,12 @@ const run = async (postNumber) => {
   dotenv.config();
   const client = new MongoClient(process.env.dbURI);
   const r = initiateSnoo(process);
-  const content = await getTopPostOfOddlySatisfying(
+  const content = await getTopPostOfSubreddit(
     r,
     postNumber,
     postNumber + 1
   );
+
   const doesPostExist = await findByPostID(client, content.postID);
   if (!doesPostExist) {
     const ig = new IgApiClient();

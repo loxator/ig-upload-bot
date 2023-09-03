@@ -5,7 +5,6 @@ const { promisify } = require("util");
 const ffmpeg = require("fluent-ffmpeg");
 const readFileAsync = promisify(readFile);
 const snoowrap = require("snoowrap");
-const { imageTags, videoTags } = require("./captions");
 const path = require("path");
 const downloadFile = async (url, fileName) => {
   try {
@@ -26,14 +25,10 @@ const downloadFile = async (url, fileName) => {
   }
 };
 
-const getTopPostOfOddlySatisfying = async (r, postNumber, limit) => {
+const getTopPostOfSubreddit = async (r, postNumber, limit) => {
   try {
-    const subreddit = await r.getSubreddit("oddlysatisfying");
-    const topPost = await subreddit.getTop({ time: "day", limit })[postNumber];
-    console.log(
-      "🚀 ~ file: helpers.js ~ line 29 ~ getTopPostOfOddlySatisfying ~ topPost",
-      JSON.stringify(topPost)
-    );
+    const subreddit = await r.getSubreddit(process.env.subreddit);
+    const topPost = await subreddit.getTop({ time: "hour", limit })[postNumber];
 
     if (!topPost.is_video && topPost.domain === "i.redd.it") {
       return {
@@ -102,10 +97,10 @@ const doStuffWithDownloadedVideo = async (ig, content) => {
       ),
       video: await readFileAsync(path.resolve(__dirname, "../../final.mp4")),
 
-      caption: `${content.title} - Posted on r/oddlySatisfying by ${
+      caption: `${content.title} - Posted on r/InstaCelebsGossip by ${
         content.author
       }
-                ${videoTags} ${convertTileToHashTag(content.title)}`,
+                ${convertTilteToHashTag(content.title)}`,
     });
 
     console.log("Done ig.publish.video ");
@@ -129,10 +124,12 @@ const doStuffWithDownloadedImage = async (sharp, ig, content) => {
   await ig.publish.photo({
     // read the file into a Buffer
     file: await readFileAsync("output.jpg"),
-    caption: `${content.title} - Posted on r/oddlySatisfying by ${
+    caption: `${content.title} - Posted on r/InstaCelebsGossip by ${
       content.author
-    }
-                ${imageTags} ${convertTileToHashTag(content.title)}`,
+    }. Get more hot ☕️ on https://www.reddit.com/r/InstaCelebsGossip/
+                 ${convertTitleToHashTag(content.title)}`,
+
+    
   });
 };
 const initiateSnoo = (process) => {
@@ -152,10 +149,10 @@ const initiateSnoo = (process) => {
   }
 };
 
-const convertTileToHashTag = (words) => {
+const convertTitleToHashTag = (words) => {
   let result = "";
   words.split(" ").map((word) => {
-    result += `#${word} `;
+    if(word.length > 5) result += `#${word} `;
   });
 
   return result;
@@ -164,7 +161,7 @@ const convertTileToHashTag = (words) => {
 module.exports = {
   initiateSnoo,
   downloadFile,
-  getTopPostOfOddlySatisfying,
+  getTopPostOfSubreddit,
   mergeAudioAndVideo,
   doStuffWithDownloadedImage,
   doStuffWithDownloadedVideo,
